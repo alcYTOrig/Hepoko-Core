@@ -1,0 +1,9 @@
+# [======================================Global:Hepoko====================================================]
+
+AuthEveryDay: true
+Control: true
+CustomChat: true
+MimicChest: false
+TabManager: true
+
+debug: false

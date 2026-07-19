@@ -1,0 +1,8 @@
+animations:
+  server_name:
+    # Интервал смены кадров в тиках (2 тика = 0.1 сек)
+    change-interval: 2
+    texts:
+      - "    &6&lHEPOKO &e&lNETWORK    "
+      - "    &e&lHEPOKO &6&lNETWORK    "
+      - "    &f&lHEPOKO &e&lNETWORK    "

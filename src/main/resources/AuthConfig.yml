@@ -1,0 +1,16 @@
+# [======================================AuthEveryDay:Hepoko====================================================]
+
+discord-token: "YOUR_BOT_TOKEN"
+
+# Время сессии в минутах (если игрок перезашел в течение этого времени, 2FA не запрашивается)
+session-duration-minutes: 5
+auth-timeout-seconds: 60
+
+# Глобальное включение 2FA (true — бот работает, кнопки отправляются; false — 2FA полностью отключена, вход только по паролю)
+2fa_enabled: true
+
+# Обязательная 2FA для всех (true — регистрация без Discord/AuthenticatorApp запрещена; false — обычный пароль разрешен)
+# Работает ТОЛЬКО если 2fa-enabled выставлен в значение true!
+2fa_only: false
+2fa_discord: true
+2fa_app: true

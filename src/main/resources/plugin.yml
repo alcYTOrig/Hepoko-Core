@@ -1,0 +1,104 @@
+name: HepokoCore
+version: '${version}'
+main: org.alc.hepokoCore.HepokoCore
+api-version: '26.2'
+load: POSTWORLD
+author: ALC
+softdepend:
+  - Vault
+
+commands:
+  register:
+    description: "Регистрация аккаунта"
+  login:
+    description: "Вход в аккаунт"
+  2fa_discord:
+    description: "Управление защитой через Discord"
+  2fa_app:
+    description: "Управление защитой через Authenticator App"
+  tempban:
+    description: "Временный бан игрока"
+    permission: hepokocore.tempban
+  tempban-ip:
+    description: "Временный бан игрока по IP"
+    permission: hepokocore.tempbanip
+  unban:
+    description: Разбан игрока в СУБД
+    permission: hepokocore.unban
+  unban-ip:
+    description: Разбан IP-адреса в СУБД
+    permission: hepokocore.unbanip
+  banlist:
+    description: Список забаненных игроков
+    permission: hepokocore.banlist
+  banlist-ip:
+    description: Список забаненных IP
+    permission: hepokocore.banlistip
+  baninfo:
+    description: Информация о бане игрока или IP
+    permission: hepokocore.baninfo
+  tempmute:
+    description: Временное ограничение чата игрока
+    permission: hepokocore.tempmute
+  unmute:
+    description: Снятие ограничения чата игрока
+    permission: hepokocore.unmute
+  broadcast:
+    description: Глобальное объявление на весь сервер
+    permission: hepokocore.broadcast
+  report:
+    description: Подать жалобу на игрока
+    permission: hepokocore.report
+  reportlist:
+    description: Управление списком репортов
+    permission: hepokocore.reportlist
+  heporeload:
+    description: Перезагружает конфиги модулей
+    permission: hepokocore.admin
+  tabreload:
+    description: Перезагружает конфиги Tab
+    permission: hepokocore.admin
+  hperm:
+    description: Перезагружает конфиги Tab
+    permission: hepokocore.admin
+
+permissions:
+  hepokocore.tempban:
+    description: Разрешение на временный бан игроков
+    default: true
+  hepokocore.tempbanip:
+    description: Разрешение на временный бан по IP
+    default: true
+  hepokocore.unban:
+    description: Разрешение на разбан игроков
+    default: true
+  hepokocore.unbanip:
+    description: Разрешение на разбан IP-адресов
+    default: true
+  hepokocore.banlist:
+    description: Разрешение на просмотр списка банов
+    default: true
+  hepokocore.banlistip:
+    description: Разрешение на просмотр списка банов по IP
+    default: true
+  hepokocore.baninfo:
+    description: Разрешение на просмотр информации о бане
+    default: true
+  hepokocore.tempmute:
+    description: Разрешение на временный мут
+    default: true
+  hepokocore.unmute:
+    description: Разрешение на снятие мута
+    default: true
+  hepokocore.broadcast:
+    description: Разрешение на глобальные объявления
+    default: true
+  hepokocore.report:
+    description: Разрешение на подачу жалоб
+    default: true
+  hepokocore.reportlist:
+    description: Разрешение на управление списком жалоб
+    default: true
+  hepokocore.admin:
+    description: Полный доступ к админ-командам плагина
+    default: op

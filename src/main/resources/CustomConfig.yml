@@ -1,0 +1,42 @@
+# [====================Hepoko:CustomChat/Entry===================]
+
+custom-chat:
+  enabled: true
+  pattern: "<nick>: <msg>"
+
+custom-join:
+  enabled: true
+  pattern: "[+] <nick>"
+
+custom-leave:
+  enabled: true
+  pattern: "[-] <nick>"
+
+tab:
+  enabled: true
+  update-interval: 1
+  # Автоматическое выравнивание текста по центру относительно самого длинного элемента
+  auto-center: true
+  header:
+    - " "
+    - "%animation:server_name%"
+    - " &7Привет, &e%player% &7!"
+    - " "
+  footer:
+    - " "
+    - " &7Онлайн: &a%online% &7/ &2%max_online%"
+    - " &7Твой пинг: &e%ping%ms"
+    - " "
+  # Правая панель в таб-листе (справа от ника игрока)
+  # В РАЗРАБОТКЕ
+  right-side-panel:
+    enabled: false
+    # Типы: PING (отображает задержку в виде палочек), CUSTOM_TEXT (кастомный текст), NONE (выключено)
+    type: "CUSTOM_TEXT"
+    # Текст отобразится только если тип установлен в CUSTOM_TEXT
+    text:
+      - ""
+      - ""
+      - ""
+      - ""
+      - ""
