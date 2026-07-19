@@ -61,6 +61,15 @@ commands:
   hperm:
     description: Перезагружает конфиги Tab
     permission: hepokocore.admin
+  coreprotect:
+    description: Основная команда CoreProtect
+    permission: hepokocore.admin
+    aliases: [co]
+    usage: /co <inspect|lookup|restore|rollback|purge|reload|help>
+  co:
+    description: Сокращение для CoreProtect
+    permission: hepokocore.admin
+    usage: /co <inspect|lookup|restore|rollback|purge|reload|help>
 
 permissions:
   hepokocore.tempban:

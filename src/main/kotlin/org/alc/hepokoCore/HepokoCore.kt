@@ -21,6 +21,7 @@ import org.alc.hepokoCore.perms.PermissionDatabase
 import org.alc.hepokoCore.perms.PermissionManager
 import org.alc.hepokoCore.perms.HepokoPermsCommand
 import org.alc.hepokoCore.perms.HepokoVaultPermissions
+import org.alc.hepokoCore.protect.ProtectManager
 import net.milkbowl.vault.permission.Permission
 import org.bukkit.Bukkit
 
@@ -52,6 +53,7 @@ class HepokoCore : JavaPlugin() {
     val configManager = ConfigManager(this)
     lateinit var authEveryDay: AuthEveryDay
     private var vaultPermission: Permission? = null
+    private lateinit var protectManager: ProtectManager
 
     private lateinit var animationManager: AnimationManager
     lateinit var tabManager: TabManager
@@ -85,6 +87,7 @@ class HepokoCore : JavaPlugin() {
 
         initMimic()
         initTab()
+        initProtect()
 
         server.pluginManager.registerEvents(CustomChat(), this)
         DatabaseManager.setup(dataFolder)
@@ -97,6 +100,7 @@ class HepokoCore : JavaPlugin() {
         org.alc.hepokoCore.report.ReportDatabase.close()
         DatabaseManager.close()
         org.alc.hepokoCore.mimicChest.MimicDatabase.close()
+        if (::protectManager.isInitialized) protectManager.shutdown()
 
         if (::tabManager.isInitialized) tabManager.stop()
     }
@@ -187,5 +191,14 @@ class HepokoCore : JavaPlugin() {
         val mimicModule = org.alc.hepokoCore.mimicChest.MimicChestModule(this)
         mimicModule.loadConfig()
         server.pluginManager.registerEvents(org.alc.hepokoCore.mimicChest.MimicListener(mimicModule, this), this)
+    }
+
+    fun initProtect() {
+        if (!Configs.globalConfig.getBoolean("CoreProtect", true)) {
+            logger.info("CoreProtect disabled in GlobalConfig")
+            return
+        }
+        protectManager = ProtectManager(this)
+        protectManager.init()
     }
 }

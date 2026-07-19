@@ -234,4 +234,82 @@ object PermissionDatabase {
     fun close() {
         runCatching { connection?.close() }
     }
+
+    // ========== UTILITY METHODS ==========
+
+    fun groupExists(name: String): Boolean {
+        var exists = false
+        connection?.prepareStatement("SELECT 1 FROM groups WHERE name = ?")?.use { stmt ->
+            stmt.setString(1, name.lowercase())
+            stmt.executeQuery().use { rs ->
+                exists = rs.next()
+            }
+        }
+        return exists
+    }
+
+    fun getGroup(name: String): GroupData? {
+        var group: GroupData? = null
+        connection?.prepareStatement("SELECT name, weight FROM groups WHERE name = ?")?.use { stmt ->
+            stmt.setString(1, name.lowercase())
+            stmt.executeQuery().use { rs ->
+                if (rs.next()) {
+                    group = GroupData(rs.getString("name"), rs.getInt("weight"))
+                    // Load permissions
+                    connection?.prepareStatement("SELECT node, value FROM group_permissions WHERE group_name = ?")?.use { permStmt ->
+                        permStmt.setString(1, group?.name ?: return@use)
+                        permStmt.executeQuery().use { permRs ->
+                            while (permRs.next()) {
+                                group?.permissions?.add(PermissionNode(permRs.getString("node"), permRs.getInt("value") == 1))
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return group
+    }
+
+    fun getGroupPermissions(groupName: String): List<String> {
+        val permissions = mutableListOf<String>()
+        connection?.prepareStatement("SELECT node FROM group_permissions WHERE group_name = ? AND value = 1")?.use { stmt ->
+            stmt.setString(1, groupName.lowercase())
+            stmt.executeQuery().use { rs ->
+                while (rs.next()) {
+                    permissions.add(rs.getString("node"))
+                }
+            }
+        }
+        return permissions
+    }
+
+    fun getUserPermissions(uuid: String): List<String> {
+        val permissions = mutableListOf<String>()
+        connection?.prepareStatement("SELECT node FROM user_permissions WHERE uuid = ? AND value = 1")?.use { stmt ->
+            stmt.setString(1, uuid)
+            stmt.executeQuery().use { rs ->
+                while (rs.next()) {
+                    permissions.add(rs.getString("node"))
+                }
+            }
+        }
+        return permissions
+    }
+
+    fun getEffectivePermissions(uuid: String): Set<String> {
+        val permissions = mutableSetOf<String>()
+        
+        // Get user's groups
+        val groups = getUserGroups(uuid)
+        
+        // Add permissions from all groups
+        groups.forEach { groupName ->
+            permissions.addAll(getGroupPermissions(groupName))
+        }
+        
+        // Add user-specific permissions
+        permissions.addAll(getUserPermissions(uuid))
+        
+        return permissions
+    }
 }
